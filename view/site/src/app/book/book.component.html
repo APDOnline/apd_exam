@@ -1,0 +1,15 @@
+
+<p-dataTable [value]="books">
+  <p-header>Books</p-header>
+  <p-column header="View Questions">
+    <template let-book="rowData" pTemplate="body">
+      <button type="button" pButton [routerLink]="['/question', book.id]" label="Question"></button>
+    </template>
+  </p-column>
+  <p-column field="id" header="ID"></p-column>
+  <p-column field="name" header="Name"></p-column>
+  <p-column field="enable" header="Enable"></p-column>
+  <p-column field="public" header="Public"></p-column>
+  <p-column field="created_at" header="Created"></p-column>
+  <p-column field="updated_at" header="Updated"></p-column>
+</p-dataTable>

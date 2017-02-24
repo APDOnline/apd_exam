@@ -55,7 +55,7 @@ func RegisterAccount(c echo.Context) error {
 	user.Name = request.Name
 	user.Email = request.Email
 	user.Password = encryptPassword
-	user.Role = userRole
+	user.Role = []model.Role{userRole}
 
 	if err := db.Create(&user).Error; err != nil {
 

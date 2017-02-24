@@ -42,6 +42,10 @@ func CreateSchema(db *gorm.DB) error {
 		return errors.Wrap(err, "Migrate schema failes")
 	}
 
+	if err := db.AutoMigrate(&model.Book{}, &model.Question{}, &model.Option{}, &model.Reference{}, &model.Difficulty{}).Error; err != nil {
+		return errors.Wrap(err, "Migrate schema failes")
+	}
+
 	log.Debug("Create database schema completed")
 
 	return nil
@@ -63,10 +67,12 @@ func DefaultData(db *gorm.DB) error {
 		Name:     "admin",
 		Email:    "admin",
 		Password: "admin",
-		RoleID:   adminRole.ID,
+		Role: []model.Role{
+			adminRole,
+		},
 	}
 
-	err := db.Where(adminUser).FirstOrCreate(&adminUser).Error
+	err := db.Where("email = ?", adminUser.Email).FirstOrCreate(&adminUser).Error
 
 	if err != nil {
 		return errors.Wrap(err, "Retrive Admin user failed")
@@ -76,12 +82,34 @@ func DefaultData(db *gorm.DB) error {
 		Name:     "Jay",
 		Email:    "jack08300@gmail.com",
 		Password: "aaaaaa",
-		RoleID:   userRole.ID,
+		Role:     []model.Role{userRole},
 	}
-	err = db.Where(user1).FirstOrCreate(&user1).Error
+	err = db.Where("email = ?", user1.Email).FirstOrCreate(&user1).Error
 
 	if err != nil {
 		return errors.Wrap(err, "Retrive Admin user failed")
+	}
+
+	//Create Difficulty
+	difficulty := []model.Difficulty{
+		{
+			Name:  "EASY",
+			Point: 0.3,
+		},
+		{
+			Name:  "MEDIUM",
+			Point: 0.5,
+		},
+		{
+			Name:  "HARD",
+			Point: 0.8,
+		},
+	}
+
+	for _, d := range difficulty {
+		if err := db.Where("name = ?", d.Name).FirstOrCreate(&d).Error; err != nil {
+			return errors.Wrap(err, "Error on creating difficulty")
+		}
 	}
 
 	log.Debug("Default users creation completed")
