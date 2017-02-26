@@ -1,15 +1,87 @@
 
-<p-dataTable [value]="questions">
-  <p-header>Questions</p-header>
-  <p-column field="id" header="ID"></p-column>
-  <p-column field="type" header="Type"></p-column>
-  <p-column field="text" header="Text"></p-column>
-  <p-column field="category" header="Category"></p-column>
-  <p-column field="difficulty.name" header="Difficulty"></p-column>
-  <p-column field="LO" header="LO"></p-column>
-  <p-column field="LO #" header="LO #"></p-column>
-  <p-column field="Answer Exp" header="Answer Exp"></p-column>
-  <p-column field="image" header="Image"></p-column>
-  <p-column field="created_at" header="Created"></p-column>
-  <p-column field="updated_at" header="Updated"></p-column>
+<p-dataTable [value]="questions" selectionMode="single" [(selection)]="questionSelection" (onRowSelect)="onRowSelect($event)" [rows]="30" [paginator]="true" #dt>
+
+  <p-header>
+    <strong>{{ bookName }}</strong>
+  </p-header>
+
+  <p-column field="id" header="ID" [filter]="true" filterPlaceholder="Search"></p-column>
+
+  <p-column field="type" header="Type" [filter]="true" [style]="{'overflow':'visible'}" filterMatchMode="equals">
+    <template pTemplate="filter" let-col>
+      <p-dropdown [options]="questionType" [style]="{'width':'100%'}" (onChange)="dt.filter($event.value,col.field,col.filterMatchMode)" styleClass="ui-column-filter"></p-dropdown>
+    </template>
+  </p-column>
+
+<!--  <p-column field="text" header="Text">
+    <template let-question="rowData" let-i="rowIndex" pTemplate="body">
+      <button [hidden]="question.isShow" (click)="showText(i)">Show Text</button>
+      <span [hidden]="!question.isShow">{{ question.text }}</span>
+    </template>
+  </p-column>-->
+
+  <p-column field="category" header="Category" [filter]="true" filterPlaceholder="Search"></p-column>
+
+  <p-column field="difficulty.name" header="Difficulty" [style]="{'overflow':'visible'}">
+    <template pTemplate="filter" let-col>
+      <p-dropdown [options]="questionDifficulty" [style]="{'width':'100%'}" (onChange)="dt.filter($event.value,col.field,col.filterMatchMode)" styleClass="ui-column-filter"></p-dropdown>
+    </template>
+  </p-column>
+
+<!--  <p-column field="learning_outcome" header="LO" [filter]="true" filterPlaceholder="Search"></p-column>-->
+
+  <p-column field="lo_number" header="LO #" [filter]="true" filterPlaceholder="Search"></p-column>
+
+<!--  <p-column field="answer_exp" header="Answer Exp"></p-column>-->
+
+  <p-column field="choice_len" header="Choice Len" [sortable]="true"></p-column>
+
+  <p-column field="question_len" header="Question Len" [sortable]="true"></p-column>
+
+  <p-column field="read_load" header="Read Load" [sortable]="true">
+    <template>
+      {{ question.read_load }}%
+    </template>
+  </p-column>
+
+  <p-column field="created_at_display" header="Created"></p-column>
+
 </p-dataTable>
+
+
+<p-dialog [(visible)]="displayDetail" modal="modal" width="500" responsive="true">
+  <p-header>
+    Question ID: <strong>{{questionSelection ? questionSelection.id : ''}}</strong>
+  </p-header>
+  <div>
+    <div>
+      Question:
+    </div>
+    <div>
+      {{questionSelection ? questionSelection.text : ''}}
+    </div>
+    <hr style="width: 80%;"/>
+  </div>
+
+  <div>
+    <div>
+      Learning Outcome:
+    </div>
+    <div>
+      {{questionSelection ? questionSelection.learning_outcome : ''}}
+    </div>
+    <hr style="width: 80%;"/>
+  </div>
+
+
+  <div>
+
+  </div>
+
+  <p-footer>
+    <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+      Footer content here
+    </div>
+
+  </p-footer>
+</p-dialog>

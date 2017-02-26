@@ -5,9 +5,12 @@ import (
 	"fmt"
 	"io"
 
+	"time"
+
 	"github.com/Sirupsen/logrus"
 	"github.com/apd_exam/model"
 	"github.com/jinzhu/gorm"
+	"github.com/kidsdynamic/childrenlab_v2/constants"
 	"github.com/labstack/echo"
 )
 
@@ -44,4 +47,18 @@ func GetUserRole(db *gorm.DB) (model.Role, error) {
 	}
 
 	return role, nil
+}
+
+func GetNowTime() time.Time {
+	now := time.Now()
+
+	s := fmt.Sprintf("%04d-%02d-%02d %02d:%02d:%02d", now.Year(), now.Month(), now.Day(), now.Hour(), now.Minute(), now.Second())
+	t, err := time.Parse(constants.TimeLayout, s)
+
+	if err != nil {
+		fmt.Printf("Error on get now time. %#v", err)
+
+	}
+
+	return t
 }

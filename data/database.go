@@ -46,6 +46,10 @@ func CreateSchema(db *gorm.DB) error {
 		return errors.Wrap(err, "Migrate schema failes")
 	}
 
+	if err := db.AutoMigrate(&model.Exam{}, &model.ExamTag{}, &model.ExamQuestion{}, &model.ExamTag{}, &model.Tag{}).Error; err != nil {
+		return errors.Wrap(err, "Migrate schema failes")
+	}
+
 	log.Debug("Create database schema completed")
 
 	return nil

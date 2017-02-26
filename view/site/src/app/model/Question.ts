@@ -16,7 +16,13 @@ export class Question {
   options: Option[];
   reference: string;
   answer_exp: string;
-  created_at: string;
-  updated_at: string;
+  choice_len: number;
+  question_len: number;
+  read_load: number;
+  created_at: Date;
+  created_at_display: string;
+  updated_at: Date;
+  updated_at_display: string;
+  isShow: boolean;
 }
 

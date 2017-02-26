@@ -6,8 +6,6 @@ type Book struct {
 	ID        int64      `json:"id"`
 	Name      string     `json:"name"`
 	Questions []Question `json:"questions,omitempty" `
-	Enable    bool       `json:"enable"`
-	Public    bool       `json:"public"`
 	CreatedAt time.Time  `json:"created_at"`
 	UpdatedAt time.Time  `json:"updated_at"`
 }
@@ -18,13 +16,16 @@ type Question struct {
 	Text            string     `json:"text"`
 	Image           string     `json:"image"`
 	Category        string     `json:"category"`
-	Difficulty      Difficulty `json:"difficulty"`
+	Difficulty      Difficulty `json:"difficulty,omitempty"`
 	DifficultyID    int64      `json:"-"`
 	LearningOutcome string     `json:"learning_outcome"`
 	LONumber        string     `json:"lo_number"`
 	Options         []Option   `json:"options,omitempty"`
 	Reference       Reference  `json:"reference,omitempty"`
 	AnswerExp       string     `json:"answer_exp"`
+	ChoiceLen       int64      `json:"choice_len"`
+	QuestionLen     int64      `json:"question_len"`
+	ReadLoad        int32      `json:"read_load"`
 	CreatedAt       time.Time  `json:"created_at"`
 	UpdatedAt       time.Time  `json:"updated_at"`
 	BookID          int64

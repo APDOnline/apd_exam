@@ -20,4 +20,9 @@ func InitRoute(e *echo.Echo) {
 	questionAPI := e.Group("api/book")
 	questionAPI.GET("/", controller.GetAllBooks)
 	questionAPI.GET("/:bookID/questionList", controller.GetQuestionsByBook)
+
+	examAPI := e.Group("api/exam")
+	examAPI.GET("/get/:id", controller.GetExam)
+	examAPI.POST("/create", controller.CreateExam)
+	examAPI.POST("/updateQuestion", controller.UpdateQuestionToExam)
 }
