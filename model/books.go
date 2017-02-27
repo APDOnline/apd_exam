@@ -23,6 +23,7 @@ type Question struct {
 	Options         []Option   `json:"options,omitempty"`
 	Reference       Reference  `json:"reference,omitempty"`
 	AnswerExp       string     `json:"answer_exp"`
+	ShortAnswer     string     `json:"short_answer"`
 	ChoiceLen       int64      `json:"choice_len"`
 	QuestionLen     int64      `json:"question_len"`
 	ReadLoad        int32      `json:"read_load"`

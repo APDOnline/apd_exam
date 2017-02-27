@@ -36,9 +36,9 @@ type Tag struct {
 }
 
 type CreateExamRequest struct {
-	Name   string   `json:"name" binding:"required"`
-	BookID int64    `json:"book_id" binding:"required"`
-	Tag    []string `json:"tag"`
+	Name   string   `json:"name" form:"name" binding:"required"`
+	BookID int64    `json:"book_id" form:"book_id" binding:"required"`
+	Tag    []string `json:"tag" form:"tag"`
 }
 
 type UpdateQuestionToExamRequest struct {

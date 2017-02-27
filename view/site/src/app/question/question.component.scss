@@ -1,0 +1,30 @@
+
+.question_detail {
+  border: 1px solid #5F5F5F;
+  padding: .5em;
+  margin-top: 1em;
+
+  .title {
+    font-size: 14px;
+  }
+
+  .detail {
+    font-size: 17px;
+    padding: .2em 0;
+    line-height: 1.3em;
+  }
+
+  .options {
+    padding-top: .5em;
+    border-bottom: 1px solid black;
+
+    .point {
+      float: right;
+      color: #007399;
+    }
+  }
+}
+
+.italic {
+  font-style: italic;
+}

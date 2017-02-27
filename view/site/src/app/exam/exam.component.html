@@ -1,3 +1,18 @@
-<p>
-  exam works!
-</p>
+<p-dataTable [value]="book">
+  <p-header>Books</p-header>
+  <p-column field="name" header="Name"></p-column>
+  <p-column field="created_at_display" header="Created"></p-column>
+</p-dataTable>
+
+<p-dataTable [value]="exam">
+  <p-header>Exam</p-header>
+  <p-column field="name" header="Name"></p-column>
+  <p-column header="Question Count">
+    {{questionCount}}
+  </p-column>
+
+  <p-column field="status" header="Status"></p-column>
+  <p-column field="enable" header="Enable"></p-column>
+
+  <p-column field="created_at_display" header="Created"></p-column>
+</p-dataTable>

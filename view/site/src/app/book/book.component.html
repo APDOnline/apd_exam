@@ -1,10 +1,10 @@
-
 <p-dataTable [value]="books">
   <p-header>Books</p-header>
   <p-column header="Action">
     <template let-book="rowData" pTemplate="body">
       <button type="button" pButton [routerLink]="['/question', book.name, book.id]" label="Questions"></button>
-      <button type="button" pButton class="ui-button-info"  [routerLink]="['/question', book.name, book.id]" label="Create Exam"></button>
+      <button type="button" pButton class="ui-button-info" (click)="createExamClicked(book)"
+              label="Create Exam"></button>
     </template>
   </p-column>
   <p-column field="id" header="ID"></p-column>
@@ -12,3 +12,21 @@
   <p-column field="created_at_display" header="Created"></p-column>
   <p-column field="updated_at_display" header="Updated"></p-column>
 </p-dataTable>
+
+
+<p-dialog [(visible)]="showExamCreateForm"  modal="modal" dismissableMask="true" width="500" responsive="true">
+  <p-header>
+    {{createExamBookTitle}}
+  </p-header>
+
+  <h3>Exam Name</h3>
+  <input #examName pInputText type="text" name="examName" (keyup)="updateExamName(examName.value)" (keyup.enter)="submitExamCreation()"
+         (blur)="updateExamName(examName.value)"/>
+
+
+  <p-footer>
+    <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+      <button type="button" pButton (click)="submitExamCreation()" label="Create"></button>
+    </div>
+  </p-footer>
+</p-dialog>

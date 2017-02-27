@@ -16,6 +16,7 @@ export class Question {
   options: Option[];
   reference: string;
   answer_exp: string;
+  short_answer: string;
   choice_len: number;
   question_len: number;
   read_load: number;

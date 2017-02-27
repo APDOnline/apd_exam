@@ -98,7 +98,7 @@ func GetExam(c echo.Context) error {
 	defer db.Close()
 
 	var exam model.Exam
-	if err := db.Where("id = ?", examID).Preload("Questions").Preload("Questions.Difficulty").Preload("Questions.Reference").Preload("Tag").First(&exam).Error; err != nil {
+	if err := db.Where("id = ?", examID).Preload("Book").Preload("Questions").Preload("Questions.Difficulty").Preload("Questions.Reference").Preload("Tag").First(&exam).Error; err != nil {
 		return errorResponse(c, http.StatusBadRequest, errors.Wrapf(err, "Error on retrive exam. %#v", exam))
 	}
 
