@@ -1,46 +1,46 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
-import { Location } from '@angular/common';
-
+import {Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
+import {ActivatedRoute, Params} from '@angular/router';
+import {Location} from '@angular/common';
 import {Question} from "../model/Question";
 import {QuestionService} from "./question.service";
-
-import {SelectItem} from 'primeng/primeng'
-
+import {SelectItem,Message} from 'primeng/primeng'
 import 'rxjs/add/operator/switchMap';
+import {Book} from "../model/Book";
 
 @Component({
-  selector: 'app-question',
+  selector: 'question-list',
   templateUrl: './question.component.html',
   styleUrls: ['./question.component.scss']
 })
 export class QuestionComponent implements OnInit {
+  @Input() book: Book;
+  @Input() isExamQuestionSelection: boolean;
+  @Output() addingQuestion = new EventEmitter<Question>();
+
   error: string;
   questions: Question[];
-  bookName: string;
   questionType: SelectItem[];
   questionDifficulty: SelectItem[];
   questionSelection: Question;
   displayDetail: boolean;
+  message: Message[] = [];
 
-  constructor(
-    private questionService: QuestionService,
-    private route: ActivatedRoute,
-    private location: Location
-  ) { }
+  constructor(private questionService: QuestionService,
+              private route: ActivatedRoute,
+              private location: Location) {
+  }
 
   ngOnInit(): void {
     this.route.params
       .switchMap((params: Params) => {
-        this.bookName = params['bookName'];
-        return this.questionService.getList(+params['bookId'])
+        if (this.book == undefined) {
+          this.book.id = +params['bookId'];
+          this.book.name = params['bookName'];
+        }
+        return this.questionService.getList(this.book.id)
       })
       .subscribe(list => {
         this.questions = list;
-        for(let question of this.questions) {
-          question.created_at_display = (new Date(question.created_at).toLocaleDateString());
-          question.updated_at_display = (new Date(question.updated_at).toLocaleDateString());
-        }
       });
 
     this.questionType = [];
@@ -57,18 +57,24 @@ export class QuestionComponent implements OnInit {
 
   }
 
-  showText(id: number): void {
-    this.questions[id].isShow = true;
-  }
-
-  paginate(event) {
-    console.error(event);
-  }
-
   onRowSelect(event) {
-    console.error(this.questionSelection);
-
     this.displayDetail = true;
+  }
+
+  onAddingQuestion() {
+    this.addingQuestion.emit(this.questionSelection);
+    for(let i=0; i<this.questions.length; i++) {
+      if(this.questions[i].id == this.questionSelection.id) {
+        this.questions.splice(i, 1);
+        break;
+      }
+    }
+    this.displayDetail = false;
+    this.message.push({
+      severity: 'info',
+      summary: "Question Added",
+      detail: `Added question ID: ${this.questionSelection.id}`
+    })
   }
 
   goBack(): void {

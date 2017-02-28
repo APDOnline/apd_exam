@@ -9,7 +9,8 @@ import {
   TabMenuModule,
   DropdownModule,
   DialogModule,
-  InputTextModule
+  InputTextModule,
+  GrowlModule
 } from 'primeng/primeng';
 
 import {AppComponent} from './app.component';
@@ -40,7 +41,8 @@ import {ExamService} from './exam/exam.service';
     TabMenuModule,
     DropdownModule,
     DialogModule,
-    InputTextModule
+    InputTextModule,
+    GrowlModule
   ],
   providers: [
     BookService,

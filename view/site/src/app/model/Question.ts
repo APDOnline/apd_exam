@@ -21,9 +21,7 @@ export class Question {
   question_len: number;
   read_load: number;
   created_at: Date;
-  created_at_display: string;
   updated_at: Date;
-  updated_at_display: string;
   isShow: boolean;
 }
 

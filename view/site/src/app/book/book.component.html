@@ -9,8 +9,16 @@
   </p-column>
   <p-column field="id" header="ID"></p-column>
   <p-column field="name" header="Name"></p-column>
-  <p-column field="created_at_display" header="Created"></p-column>
-  <p-column field="updated_at_display" header="Updated"></p-column>
+  <p-column header="Created">
+    <template let-book="rowData" pTemplate="body">
+      {{book.created_at | date:"MM/dd/yyyy"}}
+    </template>
+  </p-column>
+  <p-column header="Updated">
+    <template let-book="rowData" pTemplate="body">
+      {{book.updated_at | date:"MM/dd/yyyy"}}
+    </template>
+  </p-column>
 </p-dataTable>
 
 

@@ -25,12 +25,6 @@ export class BookComponent implements OnInit {
     this.bookService.getList()
       .then(list => {
         this.books = list;
-
-        for(let book of this.books) {
-          book.created_at_display = (new Date(book.created_at).toLocaleDateString());
-          book.updated_at_display = (new Date(book.updated_at).toLocaleDateString());
-        }
-
       })
       .catch(error => {
         console.error(error);

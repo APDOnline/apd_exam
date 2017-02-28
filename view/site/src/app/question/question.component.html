@@ -2,7 +2,7 @@
 <p-dataTable [value]="questions" selectionMode="single" [(selection)]="questionSelection" (onRowSelect)="onRowSelect($event)" [rows]="30" [paginator]="true" #dt>
 
   <p-header>
-    <strong>{{ bookName }}</strong>
+    <strong>{{ book.name }}</strong>
   </p-header>
 
   <p-column field="id" header="ID" [filter]="true" filterPlaceholder="Search"></p-column>
@@ -13,13 +13,6 @@
     </template>
   </p-column>
 
-<!--  <p-column field="text" header="Text">
-    <template let-question="rowData" let-i="rowIndex" pTemplate="body">
-      <button [hidden]="question.isShow" (click)="showText(i)">Show Text</button>
-      <span [hidden]="!question.isShow">{{ question.text }}</span>
-    </template>
-  </p-column>-->
-
   <p-column field="category" header="Category" [filter]="true" filterPlaceholder="Search"></p-column>
 
   <p-column field="difficulty.name" header="Difficulty" [style]="{'overflow':'visible'}">
@@ -28,11 +21,7 @@
     </template>
   </p-column>
 
-<!--  <p-column field="learning_outcome" header="LO" [filter]="true" filterPlaceholder="Search"></p-column>-->
-
   <p-column field="lo_number" header="LO #" [filter]="true" filterPlaceholder="Search"></p-column>
-
-<!--  <p-column field="answer_exp" header="Answer Exp"></p-column>-->
 
   <p-column field="choice_len" header="Choice Len" [sortable]="true"></p-column>
 
@@ -44,11 +33,16 @@
     </template>
   </p-column>
 
-  <p-column field="created_at_display" header="Created"></p-column>
+  <p-column header="Created">
+    <template let-book="rowData" pTemplate="body">
+      {{book.created_at | date:"MM/dd/yyyy"}}
+    </template>
+  </p-column>
 
 </p-dataTable>
 
 
+<!-- Question Detail Dialog -->
 <p-dialog [(visible)]="displayDetail" modal="modal" resizable="true" dismissableMask="true" width="500" responsive="true">
   <p-header>
     Question ID: <strong>{{questionSelection ? questionSelection.id : ''}}</strong>
@@ -93,14 +87,17 @@
       </div>
   </div>
 
-  <div>
-
+  <div class="selectionButton" *ngIf="isExamQuestionSelection">
+    <button pButton type="button" (click)="onAddingQuestion()" class="ui-button-success" icon="fa-check" label="Add"></button>
   </div>
 
   <p-footer>
     <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
-      {{ bookName }}
+      {{ book.name }}
     </div>
 
   </p-footer>
 </p-dialog>
+
+<!-- Message -->
+<p-growl [value]="message" life="5000"></p-growl>

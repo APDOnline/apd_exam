@@ -1,18 +1,26 @@
-<p-dataTable [value]="book">
-  <p-header>Books</p-header>
-  <p-column field="name" header="Name"></p-column>
-  <p-column field="created_at_display" header="Created"></p-column>
-</p-dataTable>
-
 <p-dataTable [value]="exam">
   <p-header>Exam</p-header>
   <p-column field="name" header="Name"></p-column>
-  <p-column header="Question Count">
-    {{questionCount}}
-  </p-column>
-
+  <p-column field="book.name" header="Book Name"></p-column>
   <p-column field="status" header="Status"></p-column>
   <p-column field="enable" header="Enable"></p-column>
 
-  <p-column field="created_at_display" header="Created"></p-column>
+  <p-column header="Created">
+    <template let-book="rowData" pTemplate="body">
+      {{book.created_at | date:"MM/dd/yyyy HH:mm"}}
+    </template>
+  </p-column>
+  <p-column header="Updated">
+    <template let-book="rowData" pTemplate="body">
+      {{book.updated_at | date:"MM/dd/yyyy HH:mm"}}
+    </template>
+  </p-column>
 </p-dataTable>
+
+<span>Question Count: {{questionCount}}</span>
+
+<div *ngIf="book != undefined" class="">
+  <question-list (addingQuestion)="addQuestion($event)" [book]="book" [isExamQuestionSelection]="true"></question-list>
+</div>
+
+
