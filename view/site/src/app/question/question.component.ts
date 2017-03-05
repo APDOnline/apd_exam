@@ -34,6 +34,7 @@ export class QuestionComponent implements OnInit {
     this.route.params
       .switchMap((params: Params) => {
         if (this.book == undefined) {
+          this.book = new Book;
           this.book.id = +params['bookId'];
           this.book.name = params['bookName'];
         }

@@ -7,6 +7,7 @@ import {
   DataTableModule,
   SharedModule,
   TabMenuModule,
+  TabViewModule,
   DropdownModule,
   DialogModule,
   InputTextModule,
@@ -22,6 +23,7 @@ import {QuestionService} from './question/question.service';
 import {ExamComponent} from './exam/exam.component';
 import {requestOptionsProvider} from './default-request-options.service';
 import {ExamService} from './exam/exam.service';
+import { ExamQuestionComponent } from './exam-question/exam-question.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +31,7 @@ import {ExamService} from './exam/exam.service';
     BookComponent,
     QuestionComponent,
     ExamComponent,
+    ExamQuestionComponent
   ],
   imports: [
     BrowserModule,
@@ -42,7 +45,8 @@ import {ExamService} from './exam/exam.service';
     DropdownModule,
     DialogModule,
     InputTextModule,
-    GrowlModule
+    GrowlModule,
+    TabViewModule
   ],
   providers: [
     BookService,

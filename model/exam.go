@@ -42,6 +42,6 @@ type CreateExamRequest struct {
 }
 
 type UpdateQuestionToExamRequest struct {
-	ExamID      int64   `json:"exam_id" binding:"required"`
-	QuestionIDs []int64 `json:"question_id" binding:"required"`
+	ExamID     int64 `json:"exam_id" binding:"required"`
+	QuestionID int64 `json:"question_id" binding:"required"`
 }

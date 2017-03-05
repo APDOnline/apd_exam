@@ -8,7 +8,7 @@ export class Exam {
   id: number;
   name: string;
   book: Book;
-  question: Question[];
+  questions: Question[];
   status: string;
   enable: boolean;
   created_at: Date;

@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
-
 import 'rxjs/add/operator/switchMap';
 
-import { Exam } from '../model/exam';
+import { Exam } from '../model/Exam';
 import {ExamService} from "./exam.service";
 import {Book} from "../model/Book";
+
+
 @Component({
   selector: 'app-exam',
   templateUrl: './exam.component.html',
@@ -13,28 +14,40 @@ import {Book} from "../model/Book";
 })
 export class ExamComponent implements OnInit {
 
-  exam: Exam[] = [];
+  exam: Exam;
   book: Book;
   questionCount: number;
+  examQuestionTabName: string;
 
   constructor(private route: ActivatedRoute, private examService: ExamService) { }
 
   ngOnInit() {
+    this.updateExamQuestionTitle(0);
+    this.exam = new Exam;
     this.route.params
       .switchMap((params: Params) => {
       return this.examService.getExam(+params['examId'])
     })
       .subscribe(exam => {
         this.book = exam.book;
-        this.questionCount = exam.question ? exam.question.length : 0;
-        this.exam.push(exam);
+        this.exam = exam;
+        console.error(this.exam);
+        this.updateExamQuestionTitle(this.exam.questions ? this.exam.questions.length : 0);
       })
   }
 
   addQuestion(question) {
-    this.exam[0].question = this.exam[0].question || [];
-    this.exam[0].question.push(question);
-    this.questionCount = this.exam[0].question.length;
+    this.exam.questions = this.exam.questions || [];
+    this.exam.questions.push(question);
+    this.updateExamQuestionTitle(this.exam.questions.length);
+
+
+    let newExam = this.examService.addQuestion(this.exam.id, question);
   }
+
+  updateExamQuestionTitle(count: number) {
+    this.examQuestionTabName = `Exam Questions (${count})`;
+  }
+
 
 }

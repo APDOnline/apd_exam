@@ -1,26 +1,67 @@
-<p-dataTable [value]="exam">
-  <p-header>Exam</p-header>
-  <p-column field="name" header="Name"></p-column>
-  <p-column field="book.name" header="Book Name"></p-column>
-  <p-column field="status" header="Status"></p-column>
-  <p-column field="enable" header="Enable"></p-column>
+<div class="examPage">
 
-  <p-column header="Created">
-    <template let-book="rowData" pTemplate="body">
-      {{book.created_at | date:"MM/dd/yyyy HH:mm"}}
-    </template>
-  </p-column>
-  <p-column header="Updated">
-    <template let-book="rowData" pTemplate="body">
-      {{book.updated_at | date:"MM/dd/yyyy HH:mm"}}
-    </template>
-  </p-column>
-</p-dataTable>
+<!--  <p-dataTable [value]="exam">
+    <p-header>Exam</p-header>
+    <p-column field="name" header="Name"></p-column>
+    <p-column field="book.name" header="Book Name"></p-column>
+    <p-column field="status" header="Status"></p-column>
+    <p-column field="enable" header="Enable"></p-column>
 
-<span>Question Count: {{questionCount}}</span>
+    <p-column header="Created">
+      <template let-book="rowData" pTemplate="body">
+        {{book.created_at | date:"MM/dd/yyyy HH:mm"}}
+      </template>
+    </p-column>
+    <p-column header="Updated">
+      <template let-book="rowData" pTemplate="body">
+        {{book.updated_at | date:"MM/dd/yyyy HH:mm"}}
+      </template>
+    </p-column>
+  </p-dataTable>-->
+  <table border="1">
+    <thead>
+    <th>
+      Name
+    </th>
+    <th>
+      Book Name
+    </th>
+    <th>
+      Status
+    </th>
+    <th>
+      Enable
+    </th>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          {{ exam?.name }}
+        </td>
+        <td>
+          {{ exam?.book?.name }}
+        </td>
+        <td>
+          {{ exam?.status }}
+        </td>
+        <td>
+          {{ exam?.enable }}
+        </td>
+      </tr>
+    </tbody>
+  </table>
 
-<div *ngIf="book != undefined" class="">
-  <question-list (addingQuestion)="addQuestion($event)" [book]="book" [isExamQuestionSelection]="true"></question-list>
+  <p-tabView>
+    <p-tabPanel header="Total Questions" class="examTab">
+      <div *ngIf="book != undefined" class="">
+        <question-list (addingQuestion)="addQuestion($event)" [book]="book" [isExamQuestionSelection]="true"></question-list>
+      </div>
+    </p-tabPanel>
+    <p-tabPanel header="{{ examQuestionTabName }}">
+      <app-exam-question [exam]="exam"></app-exam-question>
+    </p-tabPanel>
+  </p-tabView>
+
 </div>
 
 

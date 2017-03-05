@@ -72,17 +72,19 @@ func UpdateQuestionToExam(c echo.Context) error {
 		return errorResponse(c, http.StatusBadRequest, errors.Wrap(err, "Error on Finding questions"))
 	}
 
-	questions, err := getQuestionListByIDs(db, exam.BookID, request.QuestionIDs)
+	for _, question := range exam.Questions {
+		if question.ID == request.QuestionID {
+			return errorResponse(c, http.StatusConflict, errors.Wrap(errors.New("Conflict"), "The record already exists"))
+		}
+	}
 
-	if err != nil {
+	var question model.Question
+
+	if err := db.Where("id = ?", request.QuestionID).First(&question).Error; err != nil {
 		return errorResponse(c, http.StatusBadRequest, errors.Wrap(err, "Error on Finding questions"))
 	}
 
-	if err := db.Exec("DELETE FROM exam_question WHERE exam_id = ?", exam.ID).Error; err != nil {
-		return errorResponse(c, http.StatusInternalServerError, errors.Wrap(err, "Error on Deleting questions belong to the exam"))
-	}
-
-	exam.Questions = questions
+	exam.Questions = append(exam.Questions, question)
 	if err := db.Omit("Book", "Tag").Save(&exam).Error; err != nil {
 		return errorResponse(c, http.StatusInternalServerError, errors.Wrapf(err, "Error on saving exam.\n%#v", exam))
 	}
@@ -98,7 +100,7 @@ func GetExam(c echo.Context) error {
 	defer db.Close()
 
 	var exam model.Exam
-	if err := db.Where("id = ?", examID).Preload("Book").Preload("Questions").Preload("Questions.Difficulty").Preload("Questions.Reference").Preload("Tag").First(&exam).Error; err != nil {
+	if err := db.Where("id = ?", examID).Preload("Book").Preload("Questions").Preload("Questions.Options").Preload("Questions.Difficulty").Preload("Questions.Reference").Preload("Tag").First(&exam).Error; err != nil {
 		return errorResponse(c, http.StatusBadRequest, errors.Wrapf(err, "Error on retrive exam. %#v", exam))
 	}
 
