@@ -23,6 +23,8 @@
 
   <p-column field="lo_number" header="LO #" [filter]="true" filterPlaceholder="Search"></p-column>
 
+  <p-column field="reference.chapter_id" header="Chapter ID" [filter]="true" filterPlaceholder="Search" filterMatchMode="equals"></p-column>
+
   <p-column field="choice_len" header="Choice Len" [sortable]="true"></p-column>
 
   <p-column field="question_len" header="Question Len" [sortable]="true"></p-column>
@@ -43,7 +45,7 @@
 
 
 <!-- Question Detail Dialog -->
-<p-dialog [(visible)]="displayDetail" modal="modal" resizable="true" dismissableMask="true" width="500" responsive="true">
+<p-dialog [(visible)]="displayDetail" modal="modal" resizable="true" dismissableMask="true" width="600" [style]="{'max-height': '600px', 'overflow': 'auto'}" responsive="true">
   <p-header>
     Question ID: <strong>{{questionSelection ? questionSelection.id : ''}}</strong>
   </p-header>

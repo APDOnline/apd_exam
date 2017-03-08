@@ -8,16 +8,17 @@ const (
 )
 
 type Exam struct {
-	ID        int64      `json:"id"`
-	Name      string     `json:"name"`
-	Book      Book       `json:"book"`
-	BookID    int64      `json:"-"`
-	Questions []Question `json:"questions" gorm:"many2many:exam_question;"`
-	Tag       []Tag      `json:"tags" gorm:"many2many:exam_tag;"`
-	Status    string     `json:"status"`
-	Enable    bool       `json:"enable"`
-	CreatedAt time.Time  `json:"created_at"`
-	UpdatedAt time.Time  `json:"updated_at"`
+	ID            int64      `json:"id"`
+	Name          string     `json:"name"`
+	Book          Book       `json:"book"`
+	BookID        int64      `json:"-"`
+	Questions     []Question `json:"questions" gorm:"many2many:exam_question;"`
+	QuestionCount int64      `json:"question_count" gorm:"-"`
+	Tag           []Tag      `json:"tags" gorm:"many2many:exam_tag;"`
+	Status        string     `json:"status"`
+	Enable        bool       `json:"enable"`
+	CreatedAt     time.Time  `json:"created_at"`
+	UpdatedAt     time.Time  `json:"updated_at"`
 }
 
 type ExamQuestion struct {

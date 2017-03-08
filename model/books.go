@@ -3,11 +3,12 @@ package model
 import "time"
 
 type Book struct {
-	ID        int64      `json:"id"`
-	Name      string     `json:"name"`
-	Questions []Question `json:"questions,omitempty" `
-	CreatedAt time.Time  `json:"created_at"`
-	UpdatedAt time.Time  `json:"updated_at"`
+	ID            int64      `json:"id"`
+	Name          string     `json:"name"`
+	Questions     []Question `json:"questions,omitempty" `
+	QuestionCount int64      `json:"question_count" gorm:"-"`
+	CreatedAt     time.Time  `json:"created_at"`
+	UpdatedAt     time.Time  `json:"updated_at"`
 }
 
 type Question struct {

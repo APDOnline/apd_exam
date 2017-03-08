@@ -1,5 +1,6 @@
 import {Difficulty} from "./Difficulty";
 import {Option} from "./Option";
+import {Reference} from "./Reference";
 /**
  * Created by yen-chiehchen on 2/23/17.
  */
@@ -14,7 +15,7 @@ export class Question {
   learning_outcome: string;
   lo_number: string;
   options: Option[];
-  reference: string;
+  reference: Reference;
   answer_exp: string;
   short_answer: string;
   choice_len: number;

@@ -16,7 +16,6 @@ export class ExamComponent implements OnInit {
 
   exam: Exam;
   book: Book;
-  questionCount: number;
   examQuestionTabName: string;
 
   constructor(private route: ActivatedRoute, private examService: ExamService) { }

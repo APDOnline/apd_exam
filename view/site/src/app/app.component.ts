@@ -13,7 +13,8 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     this.menuItem = [
-      {label: 'Books', icon: 'fa-book'}
+      {label: 'Books', icon: 'fa-book', routerLink: ["/book"]},
+      {label: 'Exams', icon: 'fa-list', routerLink: ["/examList"]}
     ]
   }
 

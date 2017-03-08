@@ -7,8 +7,9 @@
               label="Create Exam"></button>
     </template>
   </p-column>
-  <p-column field="id" header="ID"></p-column>
+  <p-column field="id" header="ID" [style]="{'width': '40px'}"></p-column>
   <p-column field="name" header="Name"></p-column>
+  <p-column field="question_count" header="Question Count"></p-column>
   <p-column header="Created">
     <template let-book="rowData" pTemplate="body">
       {{book.created_at | date:"MM/dd/yyyy"}}

@@ -20,10 +20,14 @@ func GetAllBooks(c echo.Context) error {
 	db := data.NewDB()
 	defer db.Close()
 
-	books := &[]model.Book{}
+	books := []model.Book{}
 
 	if err := db.Find(&books).Order("created_at desc").Error; err != nil {
 		return errorResponse(c, http.StatusInternalServerError, errors.Wrap(err, "Error on retrive books"))
+	}
+
+	for i := range books {
+		db.Table("question").Where("book_id = ?", books[i].ID).Count(&books[i].QuestionCount)
 	}
 
 	return c.JSON(http.StatusOK, books)

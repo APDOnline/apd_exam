@@ -9,6 +9,7 @@ export class Exam {
   name: string;
   book: Book;
   questions: Question[];
+  question_count: number;
   status: string;
   enable: boolean;
   created_at: Date;

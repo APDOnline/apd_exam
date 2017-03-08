@@ -20,4 +20,5 @@ func InitRoute(e *echo.Echo) {
 	examAPI.GET("/get/:id", controller.GetExam)
 	examAPI.POST("/create", controller.CreateExam)
 	examAPI.POST("/updateQuestion", controller.UpdateQuestionToExam)
+	examAPI.GET("/list", controller.GetExamList)
 }

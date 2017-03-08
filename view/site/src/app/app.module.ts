@@ -24,6 +24,8 @@ import {ExamComponent} from './exam/exam.component';
 import {requestOptionsProvider} from './default-request-options.service';
 import {ExamService} from './exam/exam.service';
 import { ExamQuestionComponent } from './exam-question/exam-question.component';
+import { ExamListComponent } from './exam-list/exam-list.component';
+import {ExamListService} from "./exam-list/exam-list.service";
 
 @NgModule({
   declarations: [
@@ -31,7 +33,8 @@ import { ExamQuestionComponent } from './exam-question/exam-question.component';
     BookComponent,
     QuestionComponent,
     ExamComponent,
-    ExamQuestionComponent
+    ExamQuestionComponent,
+    ExamListComponent
   ],
   imports: [
     BrowserModule,
@@ -52,7 +55,9 @@ import { ExamQuestionComponent } from './exam-question/exam-question.component';
     BookService,
     QuestionService,
     ExamService,
-    requestOptionsProvider
+    requestOptionsProvider,
+    ExamListService
+
   ],
   bootstrap: [AppComponent]
 })

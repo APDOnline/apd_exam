@@ -103,8 +103,27 @@ func GetExam(c echo.Context) error {
 	if err := db.Where("id = ?", examID).Preload("Book").Preload("Questions").Preload("Questions.Options").Preload("Questions.Difficulty").Preload("Questions.Reference").Preload("Tag").First(&exam).Error; err != nil {
 		return errorResponse(c, http.StatusBadRequest, errors.Wrapf(err, "Error on retrive exam. %#v", exam))
 	}
-
 	return c.JSON(http.StatusOK, exam)
+
+}
+
+func GetExamList(c echo.Context) error {
+	db := data.NewDB()
+	defer db.Close()
+
+	exams := []model.Exam{}
+	if err := db.Preload("Book").Preload("Tag").Find(&exams).Error; err != nil {
+		if err == gorm.ErrRecordNotFound {
+			return c.JSON(http.StatusOK, map[string]string{})
+		}
+		return errorResponse(c, http.StatusBadRequest, errors.Wrapf(err, "Error on retrive exam. %#v", exams))
+	}
+
+	for i := range exams {
+		db.Table("exam_question").Where("exam_id = ?", exams[i].ID).Count(&exams[i].QuestionCount)
+	}
+
+	return c.JSON(http.StatusOK, exams)
 }
 
 func getQuestionListByIDs(db *gorm.DB, bookId int64, questionIds []int64) ([]model.Question, error) {

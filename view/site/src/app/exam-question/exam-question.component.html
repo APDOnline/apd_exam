@@ -23,6 +23,8 @@
 
   <p-column field="lo_number" header="LO #" [filter]="true" filterPlaceholder="Search"></p-column>
 
+  <p-column field="reference.chapter_id" header="Chapter ID" [filter]="true" filterPlaceholder="Search" filterMatchMode="equals"></p-column>
+
   <p-column field="choice_len" header="Choice Len" [sortable]="true"></p-column>
 
   <p-column field="question_len" header="Question Len" [sortable]="true"></p-column>
@@ -68,7 +70,7 @@
   <div *ngIf="questionSelection != null && questionSelection.options != null" class="question_detail">
     <div class="title">
       Options:
-    </div>
+    </div>1
 
     <div>
       <div class="detail options" *ngFor="let option of questionSelection.options; let i = index">
